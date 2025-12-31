@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chúc Mừng Năm Mới 🎆</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at bottom, #1a0000, #020024);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: white;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    font-size: clamp(24px, 6vw, 34px);
+    margin-bottom: 5px;
+    text-shadow: 0 0 20px rgba(255,215,0,0.9);
+    white-space: nowrap;       /* KHÔNG XUỐNG DÒNG */
+}
+
+.year {
+    font-size: 45px;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 0 30px rgba(255,215,0,1);
+    margin-bottom: 15px;
+}
+
+.flowers {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.photo-box {
+    width: 80%;
+    max-width: 280px;
+    margin: 15px 0 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.photo-box img {
+    width: 100%;
+    display: block;
+}
+
+.message {
+    font-size: 16px;
+    line-height: 1.4;
+    margin-bottom: 25px;
+    opacity: 0;
+    animation: fadeIn 2.5s forwards;
+    animation-delay: 0.8s;
+}
+
+.music-btn {
+    width: 60%;
+    max-width: 260px;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 30px;
+    border: none;
+    background: linear-gradient(45deg, #ff9800, #ff5722);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(255,152,0,0.7);
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.music-btn:active {
+    transform: scale(0.96);
+}
+
+/* Hoa mai + đào rơi */
+.flower {
+    position: fixed;
+    top: -10px;
+    animation: fall linear forwards;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+    }
+}
+
+/* Pháo hoa nổ */
+.spark {
+    position: fixed;
+    font-size: 14px;
+    pointer-events: none;
+    animation: explode 1.2s forwards;
+    z-index: 0;
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(0.2);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x), var(--y)) scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* PC */
+@media (min-width: 768px) {
+    h1 { font-size: 38px; }
+    .year { font-size: 60px; }
+    .photo-box { max-width: 320px; }
+    .message { font-size: 19px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎆 Chúc Mừng Năm Mới 🎆</h1>
+    <div class="year">2026</div>
+    <div class="flowers">🌼🌸🌼🌸</div>
+
+    <div class="photo-box">
+        <img src="Canhom.jpg" >
+    </div>
+
+    <div class="message">
+        Chúc mừng năm mới !!!
+        <br>
+        Chúc mọi người năm mới vui vẻ.
+        <br>
+        An khang – hạnh phúc – bình an 🌼  
+    </div>
+
+    <button class="music-btn" onclick="toggleMusic()" id="musicBtn">
+        🎵 Bật nhạc
+    </button>
+
+    <audio id="music" loop>
+        <source src="Nhac.mp3" type="audio/mpeg">
+    </audio>
+
+</div>
+
+<script>
+const music = document.getElementById("music");
+const btn = document.getElementById("musicBtn");
+let isPlaying = false;
+
+function toggleMusic() {
+    if (!isPlaying) {
+        music.play().catch(()=>{});
+        btn.innerHTML = "🔇 Tắt nhạc";
+    } else {
+        music.pause();
+        btn.innerHTML = "🎵 Bật nhạc";
+    }
+    isPlaying = !isPlaying;
+}
+
+/* Hoa mai + đào rơi */
+function createFlower() {
+    const flower = document.createElement("div");
+    flower.className = "flower";
+    flower.innerHTML = Math.random() > 0.5 ? "🌼" : "🌸";
+    flower.style.left = Math.random() * window.innerWidth + "px";
+    flower.style.fontSize = (18 + Math.random() * 18) + "px";
+    flower.style.animationDuration = (6 + Math.random() * 6) + "s";
+    document.body.appendChild(flower);
+    setTimeout(() => flower.remove(), 12000);
+}
+setInterval(createFlower, 350);
+
+/* Pháo hoa nổ */
+function explodeFirework() {
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight * 0.6;
+
+    for (let i = 0; i < 18; i++) {
+        const spark = document.createElement("div");
+        spark.className = "spark";
+        spark.innerHTML = ["✨","💥","🎇","🎆"][Math.floor(Math.random()*4)];
+        spark.style.left = x + "px";
+        spark.style.top = y + "px";
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 60 + Math.random() * 80;
+        spark.style.setProperty("--x", Math.cos(angle) * distance + "px");
+        spark.style.setProperty("--y", Math.sin(angle) * distance + "px");
+
+        document.body.appendChild(spark);
+        setTimeout(() => spark.remove(), 1200);
+    }
+}
+setInterval(explodeFirework, 900);
+</script>
+
+</body>
+</html>
